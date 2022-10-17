@@ -17,3 +17,4 @@ server:
   port: 8004
 message:
   path-payment: /api/v1/payment
+  uri: /api/v1/customerProductsActive/

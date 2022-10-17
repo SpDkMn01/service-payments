@@ -7,6 +7,7 @@ import com.nttdata.bootcamp.project.Payments.utils.IPaymentMapper;
 import com.nttdata.bootcamp.project.Payments.utils.PaymentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,44 +16,46 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class PaymentService implements IPaymentService<PaymentDtoRequest, PaymentDtoResponse>
 {
+    @Value("${message.uri}")
+    String uri;
     @Autowired
-    private final IPaymentRepository paymentRepository;
+    private final IPaymentRepository repository;
     @Override
     public Flux<PaymentDtoResponse> getAll() {
-        IPaymentMapper mapper = new PaymentMapper();
-        return paymentRepository.findAll()
+        IPaymentMapper mapper = new PaymentMapper(uri);
+        return repository.findAll()
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<PaymentDtoResponse> getById(String id)
     {
-        IPaymentMapper mapper = new PaymentMapper();
-        return paymentRepository.findById(id)
+        IPaymentMapper mapper = new PaymentMapper(uri);
+        return repository.findById(id)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<PaymentDtoResponse> save(Mono<PaymentDtoRequest> object)
     {
-        IPaymentMapper mapper = new PaymentMapper();
+        IPaymentMapper mapper = new PaymentMapper(uri);
         return object.map(mapper::toEntity)
-                .flatMap(paymentRepository::insert)
+                .flatMap(repository::insert)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<PaymentDtoResponse> update(Mono<PaymentDtoRequest> object, String id)
     {
-        IPaymentMapper mapper = new PaymentMapper();
-        return paymentRepository.findById(id)
+        IPaymentMapper mapper = new PaymentMapper(uri);
+        return repository.findById(id)
                 .flatMap(
                         p -> object.map(mapper::toEntity)
                                 .doOnNext(e -> e.setId(id))
                 )
-                .flatMap(paymentRepository::save)
+                .flatMap(repository::save)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<Void> delete(String id)
     {
-        return paymentRepository.deleteById(id);
+        return repository.deleteById(id);
     }
 }

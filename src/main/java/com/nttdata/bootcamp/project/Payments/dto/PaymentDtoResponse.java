@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class PaymentDtoResponse {
     private String id;
     private String customerProductActiveUrl;
-    private double mount;
+    private double amount;
 }

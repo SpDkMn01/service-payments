@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentDtoRequest {
-    private String id;
     private String customerProductActiveId;
-    private double mount;
+    private double amount;
 }

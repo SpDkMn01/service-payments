@@ -15,5 +15,5 @@ public class Payment
     @Id
     private String id;
     private String customerProductActiveId;
-    private double mount;
+    private double amount;
 }
