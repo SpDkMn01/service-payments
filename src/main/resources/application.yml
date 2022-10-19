@@ -5,9 +5,9 @@ spring:
     mongodb:
       database: bootcamp_payment_db
       host: localhost
-      port: 8092
+      port: 8905
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://localhost:9080
 management:
   endpoints:
     web:

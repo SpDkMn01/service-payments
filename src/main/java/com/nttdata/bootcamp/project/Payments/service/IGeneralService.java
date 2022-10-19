@@ -2,7 +2,12 @@ package com.nttdata.bootcamp.project.Payments.service;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+/**
+ * <h1>IGeneral Service</h1>
+ * @Author Grupo06
+ * @version 1.0
+ * @since 2022-10-18
+ */
 public interface IGeneralService<T,R>{
     /**
      * Función generica que nos devuelve todos los objetos guardados en la coleccion segun el tipo T definido

@@ -10,7 +10,12 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+/**
+ * <h1>Payment Controller</h1>
+ * @Author Grupo06
+ * @version 1.0
+ * @since 2022-10-18
+ */
 @Slf4j
 @RequiredArgsConstructor
 @RestController

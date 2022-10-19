@@ -11,32 +11,34 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+/**
+ * <h1>Payment Service</h1>
+ * @Author Grupo06
+ * @version 1.0
+ * @since 2022-10-18
+ */
 @Service
 @RequiredArgsConstructor
 public class PaymentService implements IPaymentService<PaymentDtoRequest, PaymentDtoResponse>
 {
-    @Value("${message.uri}")
-    String uri;
     @Autowired
     private final IPaymentRepository repository;
+    @Autowired
+    private final IPaymentMapper mapper;
     @Override
     public Flux<PaymentDtoResponse> getAll() {
-        IPaymentMapper mapper = new PaymentMapper(uri);
         return repository.findAll()
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<PaymentDtoResponse> getById(String id)
     {
-        IPaymentMapper mapper = new PaymentMapper(uri);
         return repository.findById(id)
                 .map(mapper::toDtoResponse);
     }
     @Override
     public Mono<PaymentDtoResponse> save(Mono<PaymentDtoRequest> object)
     {
-        IPaymentMapper mapper = new PaymentMapper(uri);
         return object.map(mapper::toEntity)
                 .flatMap(repository::insert)
                 .map(mapper::toDtoResponse);
@@ -44,7 +46,6 @@ public class PaymentService implements IPaymentService<PaymentDtoRequest, Paymen
     @Override
     public Mono<PaymentDtoResponse> update(Mono<PaymentDtoRequest> object, String id)
     {
-        IPaymentMapper mapper = new PaymentMapper(uri);
         return repository.findById(id)
                 .flatMap(
                         p -> object.map(mapper::toEntity)
