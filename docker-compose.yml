@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  db_payment:
+    image: mongo
+    container_name: db_payment
+    ports:
+      - "27021:27017"
+    environment:
+      - "MONGO_INITDB_DATABASE=bootcamp_payment_db"
+  service-payment:
+    image: service-payments
+    container_name: service-payment
+    depends_on:
+      - db_payment
+    ports:
+      - "8007:8000"
